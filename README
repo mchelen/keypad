@@ -1,0 +1,12 @@
+About
+
+This is a demo of virtual keyboad, using HTML5 Video. It needs Firefox 3.5+. Read about it here. The code can be downloaded from here.
+Instructions
+
+The view on the left shows the raw video. The view on the right shows the augmented view. When the marker shows in the calibration sensor square, press "Calibrate" to see the keyboard. 
+
+
+Read More
+
+http://demo.nicklothian.com/keypad/
+http://nicklothian.com/blog/2009/11/18/augmented-reality-virtual-keyboard-using-html-5-video/
