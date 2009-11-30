@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+    <script language="javascript">
+
+
+        var config;
+        var calibratedColorRange;
+
+        function start() {
+             config = new Config(document.getElementById('video'), document.getElementById('canvas'));
+        }
+        
+        function calibrate() {
+            var video = document.getElementById('video');
+            if (video.paused || video.ended) {
+                return;
+            } else {
+                calibratedColorRange = config.sensedColorRange();
+                config.close();
+
+                //document.getElementById('displayAve').value = calibratedColorRange.aveRGB.r + "," + calibratedColorRange.aveRGB.g + "," + calibratedColorRange.aveRGB.b;
+                //document.getElementById('displayMax').value = calibratedColorRange.maxRGB.r + "," + calibratedColorRange.maxRGB.g + "," + calibratedColorRange.maxRGB.b;
+                //document.getElementById('displayMin').value = calibratedColorRange.minRGB.r + "," + calibratedColorRange.minRGB.g + "," + calibratedColorRange.minRGB.b;
+
+                document.getElementById('calibrateBtn').style.display = 'none';
+
+                var keypad = new Keypad(document.getElementById('video'), document.getElementById('canvas'), calibratedColorRange);
+                keypad.enable();
+            }
+        }
+
+    </script>
+
+    <script src="sylvester.js" ></script>
+    <script src="common_utils.js" ></script>
+    <script src="calibrate.js" ></script>
+    <script src="keypad.js" ></script>
+
+
+</head>
+<body onload="start();">
+
+    <!-- Ye-ha Cowboy!, Table based layout still work in HTML5 :) -->
+    <table border="0">
+        <tr>
+            <td>
+                <!--
+                To use this with a webcam instead of a saved video you'll need to stream your webcam via the same domain this is running from.
+                http://nicklothian.com/blog/2009/11/17/using-a-webcam-with-html-5-via-vlc/ has some docs on this.
+                
+                <video id="video" src="/stream/stream.ogg" width="320" height="240" autobuffer="false" autoplay="true" controls ></video>
+                -->
+                <video id="video" src="stream.ogg" width="320" height="240" autobuffer="false" autoplay="true" controls ></video>
+            </td>
+            <td><canvas id="canvas" width="320" height="240"></canvas></td>
+        </tr>
+        <tr>
+            <td>
+                <!-- some of the ids below are references from the javascript. Should clean that up some -->
+                <button id='calibrateBtn' onClick='calibrate();'>Calibrate</button>
+                <div style="padding: 15px;">
+                    <span id='calibratedcolor' style="border: solid 5px white; margin: 3px; padding: 5px;">Calibrated Color</span>&nbsp;
+                    <span id='maxcolor' style="border: solid 5px white; margin: 3px; padding: 5px;">Max</span>&nbsp;
+                    <span id='mincolor' style="border: solid 5px white; margin: 3px; padding: 5px;">Min</span>
+                </div>
+                <br />Calibrated Color:<input type='text' value='0' id='display'>
+                <br />Closest Similarity:<input type='text' value='0' id='angle'>
+                <!--
+                <br />Ave:<input type='text' value='0' id='displayAve'>
+                <br />Max:<input type='text' value='0' id='displayMax'>
+                <br />Min:<input type='text' value='0' id='displayMin'>
+                -->
+            </td>
+            <td>
+                <div id='key' style='font-size: 48px; width:100%; padding-left:50%;'>&nbsp;</div>
+            </td>
+        </tr>
+    </table>
+
+    
+
+</body>
+</html>
